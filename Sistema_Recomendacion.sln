@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "worker", "worker", "{0D2131B8-8C8B-4867-B666-79FA7600F4FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetflixRecommender", "worker\NetflixRecommender\NetflixRecommender.csproj", "{27F45819-66B3-40F1-89FA-F1F307313A54}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27F45819-66B3-40F1-89FA-F1F307313A54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F45819-66B3-40F1-89FA-F1F307313A54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F45819-66B3-40F1-89FA-F1F307313A54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F45819-66B3-40F1-89FA-F1F307313A54}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{27F45819-66B3-40F1-89FA-F1F307313A54} = {0D2131B8-8C8B-4867-B666-79FA7600F4FD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {347B8008-3AE7-4A32-A78E-1FB5A0DE69A3}
+	EndGlobalSection
+EndGlobal

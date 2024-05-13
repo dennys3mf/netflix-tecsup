@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "o53uzR+U1zEZEb+ye/+ay8yYiZztr1GkV/JfIwBg7x3Hpy+b51c3VdQirsmoTCJNdvF3IWMbXl1K+TZrLp5lEA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\MI PC\\Desktop\\Sistema_Recomendacion\\worker\\NetflixRecommender\\NetflixRecommender.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\MI PC\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\MI PC\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\MI PC\\.nuget\\packages\\npgsql\\8.0.3\\npgsql.8.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

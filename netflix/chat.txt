@@ -1,0 +1,81 @@
+import redis
+
+# Crear una conexión a Redis
+r = redis.Redis(host='localhost', port=6379, db=0)
+
+def create_similarity():
+    # Verificar si los datos y la similitud ya están en la caché
+    data = r.get('data')
+    similarity = r.get('similarity')
+    if data and similarity:
+        # Si están en la caché, cargarlos
+        data = pickle.loads(data)
+        similarity = pickle.loads(similarity)
+    else:
+        # Si no están en la caché, calcularlos y almacenarlos en la caché
+        data = pd.read_csv('main_data.csv')
+        cv = CountVectorizer()
+        count_matrix = cv.fit_transform(data['comb'])
+        similarity = cosine_similarity(count_matrix)
+        r.set('data', pickle.dumps(data))
+        r.set('similarity', pickle.dumps(similarity))
+    return data, similarity
+
+def rcmd(m):
+    m = m.lower()
+    # Buscar la película en Redis
+    recommendations = r.get(m)
+    if recommendations:
+        # Si la película se encuentra en Redis, devolver el resultado
+        return pickle.loads(recommendations)
+    else:
+        # Si la película no se encuentra en Redis, calcular la similitud del coseno
+        try:
+            data.head()
+            similarity.shape
+        except:
+            data, similarity = create_similarity()
+        if m not in data['movie_title'].unique():
+            return('¡No se encontro! Pruebe con otro nombre de película')
+        else:
+            i = data.loc[data['movie_title']==m].index[0]
+            lst = list(enumerate(similarity[i]))
+            lst = sorted(lst, key = lambda x:x[1] ,reverse=True)
+            lst = lst[1:11] # excluyendo el primer elemento ya que es la película solicitada en sí misma
+            l = []
+            for i in range(len(lst)):
+                a = lst[i][0]
+                l.append(data['movie_title'][a])
+            # Guardar el resultado de la similitud del coseno en Redis
+            r.set(m, pickle.dumps(l))
+            return l
+
+/////////////////////////////////////////////////
+def create_similarity():
+    data = pd.read_csv('main_data.csv')
+    # Creación de una matriz de recuento
+    cv = CountVectorizer()
+    count_matrix = cv.fit_transform(data['comb'])
+    # Creación de una matriz de puntuación de similitud
+    similarity = cosine_similarity(count_matrix)
+    return data,similarity
+
+def rcmd(m):
+    m = m.lower()
+    try:
+        data.head()
+        similarity.shape
+    except:
+        data, similarity = create_similarity()
+    if m not in data['movie_title'].unique():
+        return('¡No se encontro! Pruebe con otro nombre de película')
+    else:
+        i = data.loc[data['movie_title']==m].index[0]
+        lst = list(enumerate(similarity[i]))
+        lst = sorted(lst, key = lambda x:x[1] ,reverse=True)
+        lst = lst[1:11] # excluyendo el primer elemento ya que es la película solicitada en sí misma
+        l = []
+        for i in range(len(lst)):
+            a = lst[i][0]
+            l.append(data['movie_title'][a])
+        return l
