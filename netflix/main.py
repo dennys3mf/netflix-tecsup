@@ -3,25 +3,34 @@ import pandas as pd
 from flask import Flask, render_template, request
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from flask import g
+from redis import Redis
 import json
 import bs4 as bs
 import urllib.request
 import pickle
 import requests
-import redis
+import socket
+import os
+
 
 # Cargue el modelo NLP y el vectorizador TFIDF desde el disco
 filename = 'nlp_model.pkl'
 clf = pickle.load(open(filename, 'rb'))
 vectorizer = pickle.load(open('tranform.pkl','rb'))
 
-# Crear una conexión a Redis
-r = redis.Redis(host='localhost', port=6379, db=0)
+def get_redis():
+    if not hasattr(g, 'redis'):
+        g.redis = Redis(host="redis", db=0, socket_timeout=5)
+    return g.redis
+
+# conexion a redis
+r = Redis(host="redis", db=0, port=6379)
 
 def create_similarity():
     # Verificar si los datos y la similitud ya están en la caché
-    data = r.get('data')
-    similarity = r.get('similarity')
+    data = get_redis().get('data')
+    similarity = get_redis().get('similarity')
     if data and similarity:
         # Si están en la caché, cargarlos
         data = pickle.loads(data)
@@ -39,7 +48,7 @@ def create_similarity():
 def rcmd(m):
     m = m.lower()
     # Buscar la película en Redis
-    recommendations = r.get(m)
+    recommendations = get_redis().get(m)
     if recommendations:
         # Si la película se encuentra en Redis, devolver el resultado
         return pickle.loads(recommendations)
